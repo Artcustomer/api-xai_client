@@ -5,6 +5,7 @@ namespace Artcustomer\XAIClient;
 use Artcustomer\ApiUnit\Gateway\AbstractApiGateway;
 use Artcustomer\ApiUnit\Http\IApiResponse;
 use Artcustomer\XAIClient\Client\ApiClient;
+use Artcustomer\XAIClient\Connector\ApiKeyConnector;
 use Artcustomer\XAIClient\Connector\ChatCompletionsConnector;
 use Artcustomer\XAIClient\Connector\CompletionsConnector;
 use Artcustomer\XAIClient\Connector\EmbeddingModelsConnector;
@@ -19,6 +20,7 @@ use Artcustomer\XAIClient\Utils\ApiInfos;
 class XAIApiGateway extends AbstractApiGateway
 {
 
+    private ApiKeyConnector $apiKeyConnector;
     private ChatCompletionsConnector $chatCompletionsConnector;
     private CompletionsConnector $completionsConnector;
     private EmbeddingModelsConnector $embeddingModelsConnector;
@@ -65,7 +67,15 @@ class XAIApiGateway extends AbstractApiGateway
      */
     public function test(): IApiResponse
     {
+        return $this->modelConnector->list();
+    }
 
+    /**
+     * @return ApiKeyConnector
+     */
+    public function getApiKeyConnector(): ApiKeyConnector
+    {
+        return $this->apiKeyConnector;
     }
 
     /**
@@ -135,6 +145,7 @@ class XAIApiGateway extends AbstractApiGateway
      */
     private function setupConnectors(): void
     {
+        $this->apiKeyConnector = new ApiKeyConnector($this->client);
         $this->chatCompletionsConnector = new ChatCompletionsConnector($this->client);
         $this->completionsConnector = new CompletionsConnector($this->client);
         $this->embeddingModelsConnector = new EmbeddingModelsConnector($this->client);

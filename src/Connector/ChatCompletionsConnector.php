@@ -4,6 +4,9 @@ namespace Artcustomer\XAIClient\Connector;
 
 use Artcustomer\ApiUnit\Client\AbstractApiClient;
 use Artcustomer\ApiUnit\Connector\AbstractConnector;
+use Artcustomer\ApiUnit\Http\IApiResponse;
+use Artcustomer\ApiUnit\Utils\ApiMethodTypes;
+use Artcustomer\XAIClient\Http\ChatCompletionsRequest;
 
 /**
  * @author David
@@ -19,5 +22,20 @@ class ChatCompletionsConnector extends AbstractConnector
     public function __construct(AbstractApiClient $client)
     {
         parent::__construct($client, false);
+    }
+
+    /**
+     * @param array $params
+     * @return IApiResponse
+     */
+    public function create(array $params): IApiResponse
+    {
+        $data = [
+            'method' => ApiMethodTypes::POST,
+            'body' => $params
+        ];
+        $request = $this->client->getRequestFactory()->instantiate(ChatCompletionsRequest::class, [$data]);
+
+        return $this->client->executeRequest($request);
     }
 }
