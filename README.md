@@ -12,11 +12,11 @@ https://getcomposer.org/
     },
     {
         "type": "vcs",
-        "url": "https://github.com/Artcustomer/api-openai_client"
+        "url": "https://github.com/Artcustomer/api-xai_client"
     }
 ],
 "require": {
-  "artcustomer/openai-api-client": "^1.0.0",
+  "artcustomer/xai-api-client": "^1.0.0",
 }
 ```
 
